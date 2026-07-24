@@ -332,7 +332,7 @@ export const Team = {
 };
 
 export const Merchandise = {
-  releaseDate: new Date('2026-07-20T00:00:00+05:30'),
+  releaseDate: new Date('2026-07-24T22:57:00+05:30'),
   closingDate: new Date('2026-08-12T23:59:59+05:30'),
   sizes: ['S', 'M', 'L', 'XL', 'XXL'],
   price: 410,
@@ -347,6 +347,7 @@ export const Merchandise = {
     'Please ensure the name you enter in \u201CName to be printed on Merch\u201D is appropriate. We reserve the right to change it if necessary.',
     'Complete the payment using the QR code or UPI ID shown alongside this form and upload the screenshot in \u201CUpload Payment Screenshot\u201D.',
     'Merch orders will not be placed in case of non-payment or incorrect payment. Kindly ensure the exact amount is paid.',
+    'In case of any query, please feel free to ask any of the Board Members.',
   ],
 };
 
@@ -398,7 +399,7 @@ export const Fest = {
 
 export const BoardApplication = {
   phaseOverride: null,
-  openDate: new Date('2027-01-01T00:00:00+05:30'),
+  openDate: new Date('2026-01-01T00:00:00+05:30'),
   deadline: new Date('2027-01-30T23:59:59+05:30'),
   slotsStart: new Date('2027-01-01T00:00:00+05:30'),
   slotsEnd: new Date('2027-01-30T23:59:59+05:30'),

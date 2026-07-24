@@ -84,11 +84,11 @@ function LandingPage() {
 
           <TeamSection />
 
-          {/* <MerchandiseSection /> */}
+          <MerchandiseSection />
 
           {/* <FestSection /> */}
 
-          {/* <BoardApplicationSection /> */}
+          <BoardApplicationSection />
 
           <EventsSection />
 

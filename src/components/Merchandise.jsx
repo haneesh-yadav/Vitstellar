@@ -270,7 +270,7 @@ function MerchandiseSection() {
                       id="merch-fullname"
                       type="text"
                       className="board-app-detail-input"
-                      placeholder="Enter your Name"
+                      placeholder="Enter your Full Name"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       required
@@ -306,7 +306,7 @@ function MerchandiseSection() {
                       id="merch-email"
                       type="email"
                       className="board-app-detail-input"
-                      placeholder="Enter your Email"
+                      placeholder="Enter your VIT Email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
@@ -342,7 +342,7 @@ function MerchandiseSection() {
                       id="merch-printname"
                       type="text"
                       className="board-app-detail-input"
-                      placeholder="Enter the Name to be printed"
+                      placeholder="Enter the Name to be printed on Merch"
                       value={printName}
                       onChange={(e) => setPrintName(e.target.value)}
                       required

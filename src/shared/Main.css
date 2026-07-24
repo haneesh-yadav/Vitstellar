@@ -4267,7 +4267,7 @@
         }
         .merch-instructions-box{
           border: 1px solid rgba(255,255,255,0.35);
-          background: rgba(255,255,255,0.03);
+          background: linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03)), var(--bg);
           padding: 18px 22px;
           margin-bottom: 22px;
         }
@@ -4316,7 +4316,7 @@
           justify-content: center;
           gap: 16px;
           border: 1px solid rgba(255,255,255,0.35);
-          background: rgba(255,255,255,0.03);
+          background: linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03)), var(--bg);
           padding: 24px;
         }
         .merch-price-text{
