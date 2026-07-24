@@ -30,15 +30,6 @@ function computeBoardAppPhase() {
   return now < BoardApplication.resultsDate ? 'results_pending' : 'results';
 }
 
-function useBoardAppPhase() {
-  const [phase, setPhase] = useState(computeBoardAppPhase);
-  useEffect(() => {
-    const id = setInterval(() => setPhase(computeBoardAppPhase()), 1000);
-    return () => clearInterval(id);
-  }, []);
-  return phase;
-}
-
 export function BoardPositionDropdown({ id, value, onChange, options, placeholder = "Select a position" }) {
   const [open, setOpen] = useState(false);
   const [dropUp, setDropUp] = useState(false);
@@ -264,7 +255,11 @@ function BoardApplicationSection() {
     setActiveAppTab(BOARD_APP_TABS[activeTabIndex - 1].key);
   };
 
-  const phase = useBoardAppPhase();
+  // Recomputed on every render. openCountdown's useFestCountdown hook already
+  // ticks every second (even after it hits 00:00:00:00), so this stays in sync
+  // automatically — same pattern as Merchandise's isDropLive/isClosed, no need
+  // to refresh the page for the phase to switch.
+  const phase = computeBoardAppPhase();
   const headingIcon = 'how_to_reg';
 
   return (

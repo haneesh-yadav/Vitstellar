@@ -332,12 +332,12 @@ export const Team = {
 };
 
 export const Merchandise = {
-  releaseDate: new Date('2026-07-24T22:57:00+05:30'),
+  releaseDate: new Date('2026-07-29T00:00:00+05:30'),
   closingDate: new Date('2026-08-12T23:59:59+05:30'),
   sizes: ['S', 'M', 'L', 'XL', 'XXL'],
   price: 410,
   priceWords: 'Four hundred and ten only',
-  upiId: 'your-upi-id@bank',
+  upiId: '9103355700@ptyes',
   blurImage: '/assets/merchandise/blur-banner.webp',
   merchImage: '/assets/merchandise/merch-banner.webp',
   qrImage: '/assets/merchandise/payment-qr.webp',
@@ -399,7 +399,7 @@ export const Fest = {
 
 export const BoardApplication = {
   phaseOverride: null,
-  openDate: new Date('2026-01-01T00:00:00+05:30'),
+  openDate: new Date('2027-01-01T00:00:00+05:30'),
   deadline: new Date('2027-01-30T23:59:59+05:30'),
   slotsStart: new Date('2027-01-01T00:00:00+05:30'),
   slotsEnd: new Date('2027-01-30T23:59:59+05:30'),
@@ -443,6 +443,8 @@ export const BoardApplication = {
   rolesResponsibilitiesPdf: '/assets/board-application/roles-and-responsibilities.pdf',
   slotInstructions: [
     'There will be no changes in the schedule, so make sure to arrive on time for your slot.',
+    'The Link for Interview will be shared with you personally by the Board Member.',
+    'In case of any query, please feel free to ask any of the Board Members.',
   ],
   interviewSlots: [
     {
@@ -453,7 +455,16 @@ export const BoardApplication = {
     },
   ],
   results: [
-    { position: "NA-", year: "2027", regNumber: "NA-", name: "NA-" },
+    { position: "Chairperson",              year: "2027", regNumber: "NA-", name: "NA-" },
+    { position: "Secretary",                year: "2027", regNumber: "NA-", name: "NA-" },
+    { position: "Vice Chairperson",         year: "2027", regNumber: "NA-", name: "NA-" },
+    { position: "Co Secretary",             year: "2027", regNumber: "NA-", name: "NA-" },
+    { position: "Events & Management Head", year: "2027", regNumber: "NA-", name: "NA-" },
+    { position: "Finance Head",             year: "2027", regNumber: "NA-", name: "NA-" },
+    { position: "Technical Head",           year: "2027", regNumber: "NA-", name: "NA-" },
+    { position: "Design Head",              year: "2027", regNumber: "NA-", name: "NA-" },
+    { position: "Publicity Head",           year: "2027", regNumber: "NA-", name: "NA-" },
+    { position: "Editorial Head",           year: "2027", regNumber: "NA-", name: "NA-" },
   ],
 };
 
