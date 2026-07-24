@@ -84,7 +84,7 @@ function LandingPage() {
 
           <TeamSection />
 
-          <MerchandiseSection />
+          {/* <MerchandiseSection /> */}
 
           {/* <FestSection /> */}
 
