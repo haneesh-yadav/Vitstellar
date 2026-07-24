@@ -211,7 +211,11 @@ function MerchandiseSection() {
 
         <div className="merch-drop-card">
           <div className="merch-drop-banner">
-            <img className="merch-drop-banner-img" src={Merchandise.bannerImage} alt="" />
+            <img
+              className="merch-drop-banner-img"
+              src={isDropLive ? Merchandise.merchImage : Merchandise.blurImage}
+              alt=""
+            />
             <div className="merch-drop-banner-overlay" />
             <div className="merch-drop-banner-top">
               {!isDropLive && (

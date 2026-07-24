@@ -332,13 +332,14 @@ export const Team = {
 };
 
 export const Merchandise = {
-  releaseDate: new Date('2026-07-29T00:00:00+05:30'),
+  releaseDate: new Date('2026-07-20T00:00:00+05:30'),
   closingDate: new Date('2026-08-12T23:59:59+05:30'),
   sizes: ['S', 'M', 'L', 'XL', 'XXL'],
   price: 410,
   priceWords: 'Four hundred and ten only',
   upiId: 'your-upi-id@bank',
-  bannerImage: '/assets/merchandise/header-gear.webp',
+  blurImage: '/assets/merchandise/blur-banner.webp',
+  merchImage: '/assets/merchandise/merch-banner.webp',
   qrImage: '/assets/merchandise/payment-qr.webp',
   instructions: [
     'Last Date to fill the form is 05 August 2026 [11:59 PM]',
