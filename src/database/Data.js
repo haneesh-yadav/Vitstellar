@@ -517,20 +517,22 @@ export const Events = {
 export const Publications = {
   items: [
     {
-      title: "Antarikshvani - VIT Stellar Newsletter",
+      title: "Stellar Newsletter 24",
+      desc: "Ground-based light-curve analysis identifying candidate transits around three low-mass main-sequence stars.",
+      image: "/assets/publications/Stellar Newsletter 24.webp",
+      file: "/assets/publications/Stellar Newsletter 24.pdf",
+    },
+    {
+      title: "Antarikshvani - VIT Stellar Newsletter 25",
       desc: "A survey of 400+ young stellar clusters used to refine the local galaxy's spiral structure and rotation curve.",
-      accent: "#60a5fa",
-      icon: "auto_awesome",
       image: "/assets/publications/Antarikshvani - VIT Stellar Newsletter.webp",
       file: "/assets/publications/Antarikshvani - VIT Stellar Newsletter.pdf",
     },
     {
-      title: "Stellar Newsletter 24",
-      desc: "Ground-based light-curve analysis identifying candidate transits around three low-mass main-sequence stars.",
-      accent: "#f5a64d",
-      icon: "brightness_5",
-      image: "/assets/publications/Stellar Newsletter 24.webp",
-      file: "/assets/publications/Stellar Newsletter 24.pdf",
+      title: "23rd National Space Science Symposium",
+      desc: "Publication by Technical Team Captain Mahak Yadav at the 23rd National Space Science Symposium, Page 284, showcasing research excellence.  ",
+      image: "/assets/publications/23rd National Space Science Symposium.webp",
+      file: "/assets/publications/23rd National Space Science Symposium.pdf",
     },
   ],
 };
