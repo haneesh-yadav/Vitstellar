@@ -1411,16 +1411,18 @@
           border: 0;
         }
         .merch-drop-banner {
-          position: relative;
-          min-height: clamp(260px, 32vw, 380px);
-          display: flex;
-        }
+  position: relative;
+  aspect-ratio: 1536 / 910;   /* fallback only — overridden inline by bannerRatio once the active image loads */
+  width: 100%;
+  display: flex;
+  background: #0f0f11;
+}
         .merch-drop-banner-img {
           position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          object-fit: contain; /* was: cover */
         }
         .merch-drop-banner-overlay {
           position: absolute;
@@ -4367,14 +4369,15 @@
           outline: none;
         }
         @media (max-width: 860px){
-          .merch-form-row{
-            flex-direction: column;
-          }
-          .merch-payment-box{
-            flex: 1 1 auto;
-            width: 100%;
-          }
-        }
+  .merch-form-row{
+    flex-direction: column;
+  }
+  .merch-payment-box{
+    flex: 1 1 auto;
+    width: 100%;
+    order: -1;   /* moves it above the form on mobile only */
+  }
+}
         .board-app-outer-footer{
           display: flex;
           align-items: center;

@@ -91,6 +91,7 @@ function MerchandiseSection() {
   const [upiCopied, setUpiCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+  const [bannerRatio, setBannerRatio] = useState(1536 / 910); // fallback until the active image loads
 
   const handleCopyUpi = () => {
     const doCopy = () => {
@@ -210,11 +211,12 @@ function MerchandiseSection() {
         </div>
 
         <div className="merch-drop-card">
-          <div className="merch-drop-banner">
+          <div className="merch-drop-banner" style={{ aspectRatio: bannerRatio }}>
             <img
               className="merch-drop-banner-img"
               src={isDropLive ? Merchandise.merchImage : Merchandise.blurImage}
               alt=""
+              onLoad={(e) => setBannerRatio(e.target.naturalWidth / e.target.naturalHeight)}
             />
             <div className="merch-drop-banner-overlay" />
             <div className="merch-drop-banner-top">
