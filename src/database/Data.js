@@ -75,15 +75,13 @@ export const Testimonials = {
       role: "Chairperson [2024 Tenure]",
       quote: "Stellar has been much more than just a club—it became my second home. It shaped me into a better leader, helped me grow personally and professionally, and gave me friendships and memories I’ll cherish for life. Forever grateful to be a Stellar family.❤️",
       color: "purple",
-      avatarBg: "#a9b7dc",
       photo: "/assets/testimonials/Aniket Rai.webp",
     },
     {
       name: "Vishwajith Prabhakar",
       role: "Secretary [2024 Tenure]",
-      quote: "TODO: Add Vishwajith's quote before launch.", // ← replace with the real quote
+      quote: "This club which I hold very close to my heart has given me countless memories, experiences and friends. I grew as a person who was not shy to speak up anymore and could lead a team with compassion. This is more than a club to me, it's my chosen family :)",
       color: "blue",
-      avatarBg: "#f5bd3e",
       photo: "/assets/testimonials/Vishwajith Prabhakar.webp",
     },
     {
@@ -91,7 +89,6 @@ export const Testimonials = {
       role: "Vice Chairperson [2024 Tenure]",
       quote: "Stellar feels like one of those places that quietly changes you without you even realizing it. It gave me confidence when I didn’t have much, taught me to trust my decisions, reminded me that it’s okay to make mistakes, and helped me grow into someone people could rely on. Because of this family, speaking in front of crowds, meeting new people, and taking on challenges doesn’t scare me anymore. I’ll always be grateful to Stellar not just for everything it taught me, but for the person it helped me become.",
       color: "periwinkle",
-      avatarBg: "#f0a94e",
       photo: "/assets/testimonials/Devangi Arora.webp",
     },
     {
@@ -99,7 +96,6 @@ export const Testimonials = {
       role: "Chairperson [2025 Tenure]",
       quote: "Stellar has been a huge part of my journey at VIT. I joined because of my interest in astronomy, but over time it became much more than just a club. It gave me opportunities to take up responsibilities, work with some amazing people, organize events, and learn things that classrooms never really teach.",
       color: "white",
-      avatarBg: "#a7d3f5",
       photo: "/assets/testimonials/Subhra Dey.webp",
     },
     {
@@ -107,7 +103,6 @@ export const Testimonials = {
       role: "",
       quote: "",
       color: "orange",
-      avatarBg: "#f5a83c",
       photo: "/assets/testimonials/.webp",
     },
     {
@@ -115,7 +110,6 @@ export const Testimonials = {
       role: "",
       quote: "",
       color: "white",
-      avatarBg: "#3c31a3",
       photo: "/assets/testimonials/.webp",
     },
   ],
