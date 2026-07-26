@@ -99,11 +99,11 @@ export const Testimonials = {
       photo: "/assets/testimonials/Subhra Dey.webp",
     },
     {
-      name: "",
-      role: "",
-      quote: "",
+      name: "Abishek R",
+      role: "Technical Head [2025 Tenure]",
+      quote: "VIT Stellar was the foundation of my leadership and research journey. As Technical Head, I built a passionate team, led an ISRO-published research project, organized astronomy activities, and developed lifelong friendships while mentoring future leaders to continue the club's legacy.",
       color: "orange",
-      photo: "/assets/testimonials/.webp",
+      photo: "/assets/testimonials/Abishek R.webp",
     },
     {
       name: "",
@@ -326,7 +326,7 @@ export const Team = {
 };
 
 export const Merchandise = {
-  releaseDate: new Date('2026-07-29T00:00:00+05:30'),
+  releaseDate: new Date('2026-07-26T09:50:00+05:30'),
   closingDate: new Date('2026-08-12T23:59:59+05:30'),
   sizes: ['S', 'M', 'L', 'XL', 'XXL'],
   price: 410,
