@@ -326,7 +326,7 @@ export const Team = {
 };
 
 export const Merchandise = {
-  releaseDate: new Date('2026-07-26T09:50:00+05:30'),
+  releaseDate: new Date('2026-07-29T00:00:00+05:30'),
   closingDate: new Date('2026-08-12T23:59:59+05:30'),
   sizes: ['S', 'M', 'L', 'XL', 'XXL'],
   price: 410,
