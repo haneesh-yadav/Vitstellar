@@ -8,7 +8,7 @@ const NAV_LINKS = [
   { label: "Home",                   href: "#top"          },
   { label: "About Us",               href: "#aboutus"      },
   { label: "Team",                   href: "#team"   },
-  // { label: "Merchandise 2026",       href: "#merchandise"  },
+  { label: "Merchandise 2026",       href: "#merchandise"  },
   // { label: "Gravitas 2026",          href: "#fest"       },
   // { label: "Board Application 2027", href: "#board-application" },
   { label: "Events",                 href: "#events"       },
@@ -27,7 +27,7 @@ const NAV_LINKS = [
 const ANNOUNCEMENT = {
   show: false,   // ← set to false to hide the bar, true to show it
   icon: "shopping_bag",
-  text: "MERCHANDISE 2026 DROPPING SOON",
+  text: "MERCHANDISE 2026 IS LIVE",
   href: "#merchandise",
 };
 

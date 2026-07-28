@@ -58,7 +58,7 @@ export const Fame = {
       ],
     },
     {
-      title: "140 Cosmic Events Hosted",
+      title: "160 Cosmic Events Hosted",
       desc: "From interactive stargazing nights to virtual summits, our diverse range of curated experiences bridges the gap between deep-space science and eager minds, building an active hub for astronomical discovery.",
       icon: "public", 
       images: [
@@ -70,6 +70,13 @@ export const Fame = {
 
 export const Testimonials = {
   items: [
+    {
+      name: "Kritik Kumar",
+      role: "Co Founder and Chairperson [2020  Tenure]",
+      quote: "I founded VIT-Stellar, with a simple belief that the universe has a way of bringing people together who are curious enough to look beyond themselves. Laying VIT-Stellar foundation became my first leadership journey. It taught me how to rally people around a shared vision, build trust, create culture, and lead with influence rather than authority. More importantly, it showed me that leadership is about enabling others to grow. My professional journey reinforced these lessons. Leading diverse teams in high-pressure environments sharpened my ability to understand people, adapt to different temperaments, and drive outcomes by influencing without authority, a principle that continues to define my leadership style. Even today, whenever I look up at Orion, I’m reminded that individual stars become meaningful only when connected.",
+      color: "purple",
+      photo: "/assets/testimonials/Kritik Kumar.webp",
+    },
     {
       name: "Aniket Rai",
       role: "Chairperson [2024 Tenure]",
@@ -104,13 +111,6 @@ export const Testimonials = {
       quote: "VIT Stellar was the foundation of my leadership and research journey. As Technical Head, I built a passionate team, led an ISRO-published research project, organized astronomy activities, and developed lifelong friendships while mentoring future leaders to continue the club's legacy.",
       color: "orange",
       photo: "/assets/testimonials/Abishek R.webp",
-    },
-    {
-      name: "",
-      role: "",
-      quote: "",
-      color: "white",
-      photo: "/assets/testimonials/.webp",
     },
   ],
 };
@@ -159,7 +159,7 @@ export const Team = {
         { name: "Haneesh Yadav",
           role: "Finance Head",
           photo: "/assets/team/2026/Haneesh Yadav.webp",
-          links: { github: "https://github.com/haneesh-yadav", linkedin: "https://www.linkedin.com/in/haneesh-yadav/", /*website: "https://haneesh.vercel.app"*/ }
+          links: { github: "https://github.com/haneesh-yadav", linkedin: "https://www.linkedin.com/in/haneesh-yadav/", website: "https://haneesh.vercel.app" }
         },
       ],
     grid2: [
@@ -326,17 +326,17 @@ export const Team = {
 };
 
 export const Merchandise = {
-  releaseDate: new Date('2026-07-29T00:00:00+05:30'),
+  releaseDate: new Date('2026-08-01T00:00:00+05:30'),
   closingDate: new Date('2026-08-12T23:59:59+05:30'),
   sizes: ['S', 'M', 'L', 'XL', 'XXL'],
   price: 410,
   priceWords: 'Four hundred and ten only',
   upiId: '9103355700@ptyes',
-  blurImage: '/assets/merchandise/blur-banner.webp',
+  blurImage: '/assets/merchandise/merch-banner.webp',
   merchImage: '/assets/merchandise/merch-banner.webp',
   qrImage: '/assets/merchandise/payment-qr.webp',
   instructions: [
-    'Last Date to fill the form is 05 August 2026 [11:59 PM]',
+    'Last Date to fill the form is 10 August 2026 [11:59 PM]',
     'Fill in every field exactly as it should appear on record — double check the details you entered before submitting.',
     'Please ensure the name you enter in \u201CName to be printed on Merch\u201D is appropriate. We reserve the right to change it if necessary.',
     'Complete the payment using the QR code or UPI ID shown alongside this form and upload the screenshot in \u201CUpload Payment Screenshot\u201D.',
