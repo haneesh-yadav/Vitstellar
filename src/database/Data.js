@@ -326,10 +326,10 @@ export const Team = {
 };
 
 export const Merchandise = {
-  releaseDate: new Date('2026-08-01T00:00:00+05:30'),
+  releaseDate: new Date('2026-07-01T00:00:00+05:30'),
   closingDate: new Date('2026-08-12T23:59:59+05:30'),
   sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-  price: 410,
+  price: 400,
   priceWords: 'Four hundred and ten only',
   upiId: '9103355700@ptyes',
   blurImage: '/assets/merchandise/merch-banner.webp',
