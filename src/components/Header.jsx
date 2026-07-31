@@ -25,7 +25,7 @@ const NAV_LINKS = [
    to hide it entirely without touching the markup below.
    ══════════════════════════════════════════════════════ */
 const ANNOUNCEMENT = {
-  show: false,   // ← set to false to hide the bar, true to show it
+  show: true,   // ← set to false to hide the bar, true to show it
   icon: "shopping_bag",
   text: "MERCHANDISE 2026 IS LIVE",
   href: "#merchandise",
