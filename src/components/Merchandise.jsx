@@ -67,6 +67,68 @@ function ScreenshotUpload({ id, file, onChange }) {
   );
 }
 
+function SizeChartModal({ open, onClose }) {
+  const [shouldRender, setShouldRender] = useState(open);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    let raf1;
+    let raf2;
+    let timeout;
+    if (open) {
+      setShouldRender(true);
+      // Double rAF: guarantees the browser paints the initial
+      // (invisible) state before we flip to visible, so the
+      // transition has something to animate from. A single rAF
+      // can get batched with the state update above and skip
+      // straight to the end state on fast/desktop displays.
+      raf1 = requestAnimationFrame(() => {
+        raf2 = requestAnimationFrame(() => setVisible(true));
+      });
+    } else {
+      setVisible(false);
+      timeout = setTimeout(() => setShouldRender(false), 260);
+    }
+    return () => {
+      if (raf1) cancelAnimationFrame(raf1);
+      if (raf2) cancelAnimationFrame(raf2);
+      if (timeout) clearTimeout(timeout);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!shouldRender) return;
+    const onKeyDown = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [shouldRender, onClose]);
+
+  if (!shouldRender) return null;
+
+  return (
+    <div
+      className={`size-chart-overlay${visible ? ' is-visible' : ''}`}
+      onClick={onClose}
+    >
+      <div className="size-chart-modal" onClick={(e) => e.stopPropagation()}>
+        <button
+          type="button"
+          className="size-chart-close"
+          onClick={onClose}
+          aria-label="Close size chart"
+        >
+          <Icon name="close" />
+        </button>
+        <img
+          className="size-chart-img"
+          src={Merchandise.sizeChartImage}
+          alt="Merch size chart"
+        />
+      </div>
+    </div>
+  );
+}
+
 function MerchandiseSection() {
   const time = useFestCountdown(Merchandise.releaseDate);
 
@@ -92,6 +154,7 @@ function MerchandiseSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [bannerRatio, setBannerRatio] = useState(1536 / 910); // fallback until the active image loads
+  const [showSizeChart, setShowSizeChart] = useState(false);
 
   const handleCopyUpi = () => {
     const doCopy = () => {
@@ -356,7 +419,19 @@ function MerchandiseSection() {
                 </tr>
 
                 <tr className="board-app-detail-item">
-                  <td className="board-app-detail-label">Size</td>
+                  <td className="board-app-detail-label">
+                    <div className="board-app-label-row">
+                      <span>Size</span>
+                      <button
+                        type="button"
+                        className="size-chart-trigger"
+                        onClick={() => setShowSizeChart(true)}
+                      >
+                        <Icon name="straighten" />
+                        <span>Size Chart</span>
+                      </button>
+                    </div>
+                  </td>
                   <td className="board-app-detail-value board-app-detail-value--select">
                     <BoardPositionDropdown
                       id="merch-size"
@@ -438,6 +513,7 @@ function MerchandiseSection() {
         </div>
         )}
       </div>
+      <SizeChartModal open={showSizeChart} onClose={() => setShowSizeChart(false)} />
     </section>
   );
 }

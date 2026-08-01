@@ -334,6 +334,7 @@ export const Merchandise = {
   upiId: '9103355700@ptyes',
   blurImage: '/assets/merchandise/merch-banner.webp',
   merchImage: '/assets/merchandise/merch-banner.webp',
+  sizeChartImage : '/assets/merchandise/size-chart.webp',
   qrImage: '/assets/merchandise/payment-qr.webp',
   instructions: [
     'Last Date to fill the form is 10 August 2026 [11:59 PM]',
