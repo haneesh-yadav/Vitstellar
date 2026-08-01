@@ -409,7 +409,7 @@ function MerchandiseSection() {
                       className="board-app-detail-input"
                       placeholder="Enter the Name to be printed on Merch"
                       value={printName}
-                      onChange={(e) => setPrintName(e.target.value)}
+                      onChange={(e) => setPrintName(e.target.value.toUpperCase())}
                       required
                     />
                     {getFieldError('printName') && (
