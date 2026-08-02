@@ -3,6 +3,12 @@ import Icon from '../shared/Icon';
 import { Fest } from '../database/Data';
 import { TeamSocialIcon } from './Team';
 
+// Toggle to control whether the Sponsor section is displayed.
+// Set to false to hide the sponsor box entirely.
+function shouldShowSponsor() {
+  return false;
+}
+
 function festGetTimeLeft(target) {
   const diff = Math.max(0, target.getTime() - Date.now());
   return {
@@ -26,10 +32,45 @@ export function festPad(n) {
   return String(n).padStart(2, '0');
 }
 
-function FestPocCarousel({ pocs, activeIndex = 0, onSelect }) {
+function FestPocCarousel({ pocs, activeEventIndex = 0, eventsCount, onSelect }) {
   const trackRef = useRef(null);
   const dragInfo = useRef({ active: false, startX: 0, startScroll: 0, moved: false });
   const [dragging, setDragging] = useState(false);
+  // When there's only one event, "active" can't be determined by eventIndex
+  // (every poc shares the same eventIndex, so all cards would be marked
+  // active at once). Track which poc card is active locally instead — but
+  // only matters on mobile, where the layout shows one card at a time.
+  // On desktop all poc cards for a single event stay visible together.
+  const singleEvent = eventsCount <= 1;
+  const [activePocIndex, setActivePocIndex] = useState(0);
+
+  // Mirrors the CSS breakpoint used for the mobile poc-carousel layout.
+  const MOBILE_QUERY = '(max-width: 760px)';
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia(MOBILE_QUERY).matches : false
+  );
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mql = window.matchMedia(MOBILE_QUERY);
+    const handler = (e) => setIsMobile(e.matches);
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
+  }, []);
+
+  const singleEventMobileSwitching = singleEvent && isMobile && pocs.length > 1;
+
+  useEffect(() => {
+    if (activePocIndex >= pocs.length) setActivePocIndex(0);
+  }, [pocs.length, activePocIndex]);
+
+  useEffect(() => {
+    if (!singleEventMobileSwitching) return;
+    const id = setInterval(() => {
+      setActivePocIndex((prev) => (prev + 1) % pocs.length);
+    }, 10000);
+    return () => clearInterval(id);
+  }, [singleEventMobileSwitching, pocs.length]);
 
   const onPointerDown = (e) => {
     const track = trackRef.current;
@@ -54,20 +95,38 @@ function FestPocCarousel({ pocs, activeIndex = 0, onSelect }) {
     setDragging(false);
   };
 
-  const count = pocs.length;
-  const goPrev = () => onSelect && onSelect((activeIndex - 1 + count) % count);
-  const goNext = () => onSelect && onSelect((activeIndex + 1) % count);
+  const goPrev = () => {
+    if (eventsCount > 1) {
+      onSelect && onSelect((activeEventIndex - 1 + eventsCount) % eventsCount);
+    } else if (singleEventMobileSwitching) {
+      setActivePocIndex((prev) => (prev - 1 + pocs.length) % pocs.length);
+    } else if (trackRef.current) {
+      trackRef.current.scrollBy({ left: -(250 + 24), behavior: 'smooth' });
+    }
+  };
+  const goNext = () => {
+    if (eventsCount > 1) {
+      onSelect && onSelect((activeEventIndex + 1) % eventsCount);
+    } else if (singleEventMobileSwitching) {
+      setActivePocIndex((prev) => (prev + 1) % pocs.length);
+    } else if (trackRef.current) {
+      trackRef.current.scrollBy({ left: 250 + 24, behavior: 'smooth' });
+    }
+  };
+  const showArrows = eventsCount > 1 || pocs.length > 1;
 
   return (
     <div className="fest-carousel-wrap">
-      <button
-        type="button"
-        className="fest-carousel-arrow fest-carousel-arrow-left"
-        onClick={goPrev}
-        aria-label="Show previous event"
-      >
-        <Icon name="arrow_back" />
-      </button>
+      {showArrows && (
+        <button
+          type="button"
+          className="fest-carousel-arrow fest-carousel-arrow-left"
+          onClick={goPrev}
+          aria-label="Show previous event"
+        >
+          <Icon name="arrow_back" />
+        </button>
+      )}
       <div
         className={`fest-carousel${dragging ? ' dragging' : ''}`}
         ref={trackRef}
@@ -76,20 +135,31 @@ function FestPocCarousel({ pocs, activeIndex = 0, onSelect }) {
         onPointerUp={endDrag}
         onPointerLeave={endDrag}
       >
-        {pocs.map((a, i) => (
+        {pocs.map((a, i) => {
+          const isActive = singleEvent
+            ? (singleEventMobileSwitching ? i === activePocIndex : true)
+            : a.eventIndex === activeEventIndex;
+          const clickable = singleEvent ? singleEventMobileSwitching : !!onSelect;
+          return (
           <div
-            className={`fest-poc-card${i === activeIndex ? ' active' : ' blurred'}`}
-            key={a.name}
-            onClick={() => onSelect && onSelect(i)}
-            role={onSelect ? 'button' : undefined}
-            tabIndex={onSelect ? 0 : undefined}
+            className={`fest-poc-card${isActive ? ' active' : ' blurred'}`}
+            key={`${a.eventIndex}-${a.name}`}
+            onClick={() => {
+              if (singleEvent) {
+                if (singleEventMobileSwitching) setActivePocIndex(i);
+              } else {
+                onSelect && onSelect(a.eventIndex);
+              }
+            }}
+            role={clickable ? 'button' : undefined}
+            tabIndex={clickable ? 0 : undefined}
           >
             <div className="fest-poc-photo">
               <img src={a.image} alt={a.name} draggable="false" loading="lazy" />
             </div>
             <div className="fest-poc-body">
               <p className="fest-poc-name">{a.name}</p>
-              <p className="fest-poc-role">{a.event} POC</p>
+              <p className="fest-poc-role">{a.eventTitle} POC</p>
               {a.phone && (
                 <a
                   className="fest-poc-contact"
@@ -103,16 +173,19 @@ function FestPocCarousel({ pocs, activeIndex = 0, onSelect }) {
               )}
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
-      <button
-        type="button"
-        className="fest-carousel-arrow fest-carousel-arrow-right"
-        onClick={goNext}
-        aria-label="Show next event"
-      >
-        <Icon name="arrow_forward" />
-      </button>
+      {showArrows && (
+        <button
+          type="button"
+          className="fest-carousel-arrow fest-carousel-arrow-right"
+          onClick={goNext}
+          aria-label="Show next event"
+        >
+          <Icon name="arrow_forward" />
+        </button>
+      )}
     </div>
   );
 }
@@ -164,6 +237,14 @@ function FestGalleryUploadSection() {
 function FestSection() {
   const [activeEvent, setActiveEvent] = useState(0);
 
+  const festPocs = Fest.events.flatMap((ev, eventIndex) =>
+    (ev.pocs || []).map((poc) => ({
+      ...poc,
+      eventIndex,
+      eventTitle: ev.eventTitle,
+    }))
+  );
+
   useEffect(() => {
     const id = setInterval(() => {
       setActiveEvent((prev) => (prev + 1) % Fest.events.length);
@@ -206,7 +287,7 @@ function FestSection() {
         <div className="fest-hero-content">
           <h1 className="fest-hero-title">
             <span className="fest-title-row" ref={titleRowRef}>
-              <img className="fest-title-logo" src="/assets/gravitas2026/gravitas26.svg" alt="Fest 2026 logo" />
+              <img className="fest-title-logo" src={Fest.logo} alt="Fest 2026 logo" />
             </span>
           </h1>
         </div>
@@ -221,16 +302,14 @@ function FestSection() {
             onTouchEnd={handlePremierTouchEnd}
           >
             <div className="fest-premier-media">
-              <img src={Fest.events[activeEvent].eventImage} alt={Fest.events[activeEvent].eventTitle.join(' ')} loading="lazy" />
+              <img src={Fest.events[activeEvent].eventImage} alt={Fest.events[activeEvent].eventTitle} loading="lazy" />
             </div>
 
             <div className="fest-premier-content">
               <div className="fest-premier-top">
                 <div>
                   <h2 className="fest-premier-title">
-                    {Fest.events[activeEvent].eventTitle.map((line, i) => (
-                      <React.Fragment key={i}>{line}<br /></React.Fragment>
-                    ))}
+                    {Fest.events[activeEvent].eventTitle}
                   </h2>
                   <p className="fest-premier-subtitle">{Fest.events[activeEvent].org}</p>
                 </div>
@@ -271,28 +350,51 @@ function FestSection() {
             </div>
           </div>
 
-          <div className="events-timeline">
-            <div className="events-timeline-line" />
-            <div className="events-timeline-end events-timeline-end-left" />
-            <div className="events-timeline-end events-timeline-end-right" />
-            {Fest.events.map((ev, i) => (
-              <button
-                type="button"
-                className="events-timeline-item"
-                key={i}
-                onClick={() => setActiveEvent(i)}
-                aria-pressed={activeEvent === i}
-                aria-label={`Show ${ev.eventTitle.join(' ')} event`}
-                style={{ left: `${i * (250 + 24) + 250 / 2}px`, transform: 'translateX(-50%)' }}
-              >
-                <div className="events-timeline-label">
-                  {ev.eventTitle.map((line, j) => <span key={j}>{line}</span>)}
-                </div>
-                <div className={`events-timeline-marker${activeEvent === i ? ' active' : ''}`} />
-                <div className="events-timeline-connector" />
-              </button>
-            ))}
-          </div>
+          {Fest.events.length > 1 ? (
+            <div
+              className="events-timeline"
+              style={{ width: `${Fest.events.length * 250 + (Fest.events.length - 1) * 24}px` }}
+            >
+              <div className="events-timeline-line" />
+              <div className="events-timeline-end events-timeline-end-left" />
+              <div className="events-timeline-end events-timeline-end-right" />
+              {Fest.events.map((ev, i) => (
+                <button
+                  type="button"
+                  className="events-timeline-item"
+                  key={i}
+                  onClick={() => setActiveEvent(i)}
+                  aria-pressed={activeEvent === i}
+                  aria-label={`Show ${ev.eventTitle} event`}
+                  style={{ left: `${i * (250 + 24) + 250 / 2}px`, transform: 'translateX(-50%)' }}
+                >
+                  <div className="events-timeline-label">
+                    <span>{ev.eventTitle}</span>
+                  </div>
+                  <div className={`events-timeline-marker${activeEvent === i ? ' active' : ''}`} />
+                  <div className="events-timeline-connector" />
+                </button>
+              ))}
+            </div>
+          ) : festPocs.length > 1 ? (
+            <div
+              className="events-timeline-fork"
+              style={{ width: `${festPocs.length * 250 + (festPocs.length - 1) * 24}px` }}
+              aria-hidden="true"
+            >
+              <div className="events-timeline-fork-trunk" />
+              <div className="events-timeline-fork-bar" />
+              {festPocs.map((_, i) => (
+                <div
+                  key={i}
+                  className="events-timeline-fork-branch"
+                  style={{ left: `${i * (250 + 24) + 250 / 2}px` }}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="events-timeline-single" aria-hidden="true" />
+          )}
 
           <div className="fest-mobile-connector">
             <div className="fest-mobile-line" aria-hidden="true" />
@@ -300,49 +402,58 @@ function FestSection() {
         </div>
       </section>
       <section className="fest-section" id="fest-featured" style={{ paddingTop: 44, paddingBottom: 32 }}>
-        <FestPocCarousel pocs={Fest.pocs} activeIndex={activeEvent} onSelect={setActiveEvent} />
-        <div className="fest-mobile-dots">
-          {Fest.events.map((ev, i) => (
-            <button
-              type="button"
-              key={i}
-              className={`fest-mobile-dot${activeEvent === i ? ' active' : ''}`}
-              onClick={() => setActiveEvent(i)}
-              aria-pressed={activeEvent === i}
-              aria-label={`Show ${ev.eventTitle.join(' ')} event`}
-            />
-          ))}
-        </div>
+        <FestPocCarousel
+          pocs={festPocs}
+          activeEventIndex={activeEvent}
+          eventsCount={Fest.events.length}
+          onSelect={setActiveEvent}
+        />
+        {Fest.events.length > 1 && (
+          <div className="fest-mobile-dots">
+            {Fest.events.map((ev, i) => (
+              <button
+                type="button"
+                key={i}
+                className={`fest-mobile-dot${activeEvent === i ? ' active' : ''}`}
+                onClick={() => setActiveEvent(i)}
+                aria-pressed={activeEvent === i}
+                aria-label={`Show ${ev.eventTitle} event`}
+              />
+            ))}
+          </div>
+        )}
       </section>
-      <section className="fest-section" id="fest-partners" style={{ paddingTop: 32 }}>
-        <div className="fest-shell">
-          <div className="fest-sponsors">
-            <h2 className="fest-sponsors-heading">Sponsor</h2>
-            <p className="fest-sponsors-sub">{Fest.sponsorsSubtext}</p>
+      {shouldShowSponsor() && (
+        <section className="fest-section" id="fest-partners" style={{ paddingTop: 32 }}>
+          <div className="fest-shell">
+            <div className="fest-sponsors">
+              <h2 className="fest-sponsors-heading">Sponsor</h2>
+              <p className="fest-sponsors-sub">{Fest.sponsorsSubtext}</p>
 
-            <div className="fest-sponsor-single-wrap">
-              <div className="fest-sponsor-single">
-                <div className="partners-cell-top">
-                  <span className="partners-name">{Fest.sponsor.name}</span>
-                </div>
-                <div className="partners-cell-logo">
-                  <img src={Fest.sponsor.logo} alt={Fest.sponsor.name} loading="lazy" />
-                </div>
-                <div className="partners-cell-bottom">
-                  <a
-                    className="partners-view-btn"
-                    href={Fest.sponsor.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    View website <Icon name="north_east" />
-                  </a>
+              <div className="fest-sponsor-single-wrap">
+                <div className="fest-sponsor-single">
+                  <div className="partners-cell-top">
+                    <span className="partners-name">{Fest.sponsor.name}</span>
+                  </div>
+                  <div className="partners-cell-logo">
+                    <img src={Fest.sponsor.logo} alt={Fest.sponsor.name} loading="lazy" />
+                  </div>
+                  <div className="partners-cell-bottom">
+                    <a
+                      className="partners-view-btn"
+                      href={Fest.sponsor.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View website <Icon name="north_east" />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
       <FestGalleryUploadSection />
     </div>
   );

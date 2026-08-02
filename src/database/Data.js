@@ -347,29 +347,50 @@ export const Merchandise = {
 };
 
 export const Fest = {
+  logo: '/assets/gravitas2026/gravitas26.svg',
   events: [
+    // {
+    //   eventTitle: "Space Day",
+    //   org: "VIT Stellar",
+    //   eventDesc: "",
+    //   eventImage: "/assets/gravitas2026/Space Day.webp",
+    //   date: "22 SEPT 2026",
+    //   time: "09:00 AM - 05:00 PM",
+    //   teamSize: "SOLO",
+    //   registerUrl: "https://gravitas.vit.ac.in/",
+    //   pocs: [
+    //     { name: 'Zayn Khan', image: '/assets/team/2026/Zayn Khan.webp', phone: '+91 91486 36963' },
+    //     { name: 'Nakshatra Gundeli', image: '/assets/team/2026/Nakshatra Gundeli.webp', phone: '+91 93714 22293' },
+    //   ],
+    // },
     {
-      eventTitle: ["Rovaris"],
+      eventTitle: "Rovaris",
       org: "VIT Stellar X Vaayusastra",
-      eventDesc: "A night under the stars, built for explorers",
+      eventDesc: "Rovaris is a two-day rover engineering challenge that combines hands-on learning, design, and competition. Participants will learn the fundamentals of rover systems, mobility mechanisms, and control systems before designing and building their own rover. The event culminates in a series of challenges that test the performance, maneuverability, and reliability of each team’s creation.",
       eventImage: "/assets/gravitas2026/Rovaris.webp",
       date: "05 SEPT - 06 SEPT",
       time: "09:00 AM - 05:00 PM",
       teamSize: "5",
-      registerUrl: "https://example.com/register/rovaris",
+      registerUrl: "https://gravitas.vit.ac.in/",
+      pocs: [
+        { name: 'Haneesh Yadav', image: '/assets/team/2026/Haneesh Yadav.webp', phone: '+91 91033 55700' },
+      ],
     },
     {
-      eventTitle: ["Aerovate 3.0"],
+      eventTitle: "Aerovate 3.0",
       org: "VIT Stellar X Thrust Tech India",
       eventDesc: "Design, build, and launch your own rocket",
       eventImage: "/assets/gravitas2026/Aerovate 3.0.webp",
       date: "12 SEPT - 13 SEPT",
       time: "09:00 AM - 05:00 PM",
       teamSize: "4",
-      registerUrl: "https://example.com/register/aerovate",
+      registerUrl: "https://gravitas.vit.ac.in/",
+      pocs: [
+        { name: 'Khushii Anand', image: '/assets/team/2026/Khushii Anand.webp', phone: '+91 83080 36411' },
+      ],
     },
     {
-      eventTitle: ["Celestial Dive 5.0"],
+      eventTitle: "Celestial Dive 5.0",
       org: "VIT Stellar X Space Tek Planetariums",
       eventDesc: "Overnight stargazing through advanced telescopes",
       eventImage: "/assets/gravitas2026/Celestial Dive 5.0.webp",
@@ -377,19 +398,17 @@ export const Fest = {
       time: "09:00 PM - 05:00 AM",
       teamSize: "SOLO",
       tag: "OVERNIGHT",
-      registerUrl: "https://example.com/register/celestial-dive",
+      registerUrl: "https://gravitas.vit.ac.in/",
+      pocs: [
+        { name: 'Ekansh Garg', image: '/assets/team/2026/Ekansh Garg.webp', phone: '+91 97613 34159' },
+      ],
     },
-  ],
-  pocs: [
-    { name: 'Haneesh Yadav', event: 'Rovaris', image: '/assets/team/2026/Haneesh Yadav.webp', phone: '+91 91033 55700' },
-    { name: 'Khushii Anand', event: 'Aerovate', image: '/assets/team/2026/Khushii Anand.webp', phone: '+91 83080 36411' },
-    { name: 'Ekansh Garg', event: 'Celestial Dive', image: '/assets/team/2026/Ekansh Garg.webp', phone: '+91 97613 34159' },
   ],
   sponsor: { name: '', logo: '/assets/sponsors/.webp', url: 'https://example.com' },
   sponsorsSubtext: 'Thank you to our Gravitas 2026 sponsor!',
   galleryDriveLink: 'https://drive.google.com/drive/folders/PLACEHOLDER_FOLDER_ID',
   galleryUploadDesc: 'Were you at our Fest event? Share your shots with us by uploading them on below link.',
-  shotsUploadDate: new Date('2026-09-06T00:00:00+05:30'),
+  shotsUploadDate: new Date('2026-09-05T00:00:00+05:30'),
 };
 
 export const BoardApplication = {

@@ -2277,6 +2277,8 @@
 
           
           .events-timeline { display: none; }
+          .events-timeline-single { display: none; }
+          .events-timeline-fork { display: none; }
           .fest-mobile-connector {
             display: flex;
             justify-content: center;
@@ -3350,10 +3352,57 @@
         }
         .events-timeline{
           position: relative;
-          width: 798px;
+          width: auto;
           max-width: 100%;
           height: 96px;
           margin: 24px auto 0;
+        }
+        .events-timeline-single{
+          position: relative;
+          width: 2px;
+          height: 0;
+          margin: 0 auto;
+        }
+        .events-timeline-single::after{
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 2px;
+          height: 48px;
+          background: rgba(255,255,255,0.35);
+        }
+        .events-timeline-fork{
+          position: relative;
+          width: auto;
+          max-width: 100%;
+          height: 0;
+          margin: 0 auto;
+        }
+        .events-timeline-fork-trunk{
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 2px;
+          height: 24px;
+          background: rgba(255,255,255,0.35);
+        }
+        .events-timeline-fork-bar{
+          position: absolute;
+          top: 24px;
+          left: 125px;
+          right: 125px;
+          height: 2px;
+          background: rgba(255,255,255,0.35);
+        }
+        .events-timeline-fork-branch{
+          position: absolute;
+          top: 24px;
+          width: 2px;
+          height: 24px;
+          transform: translateX(-50%);
+          background: rgba(255,255,255,0.35);
         }
         .events-timeline-line{
           position: absolute;
@@ -3429,7 +3478,7 @@
         @media (max-width: 900px) {
           .events-timeline{
             overflow-x: auto;
-            width: 100%;
+            width: 100% !important;
           }
         }
         @media (max-width: 900px) {
