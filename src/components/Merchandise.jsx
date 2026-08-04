@@ -391,7 +391,8 @@ function MerchandiseSection() {
                       className="board-app-detail-input"
                       placeholder="Enter your Phone Number"
                       value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                      inputMode="numeric"
                       required
                     />
                     {getFieldError('phoneNumber') && (
