@@ -4609,6 +4609,8 @@
           }
           .board-app-detail-input,
           .board-pref-trigger{ padding: 0.85rem 1rem; }
+          .screenshot-upload-trigger{ padding-right: 52px; }
+          .screenshot-upload-remove{ right: 12px; }
           .board-app-field-error{ padding: 0 1rem 0.85rem; }
           .board-app-outer-card{ padding: 14px; }
           .merch-form-row{ gap: 14px; }

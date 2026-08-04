@@ -47,7 +47,7 @@ function ScreenshotUpload({ id, file, onChange }) {
             {file ? file.name : "Upload your payment screenshot"}
           </span>
         </span>
-        <Icon name={file ? "check_circle" : "file_upload"} className="board-pref-chevron" />
+        <Icon name="file_upload" className="board-pref-chevron" />
       </button>
       {file && (
         <button
