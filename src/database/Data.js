@@ -327,7 +327,7 @@ export const Team = {
 
 export const Merchandise = {
   releaseDate: new Date('2026-08-01T00:00:00+05:30'),
-  closingDate: new Date('2026-08-12T23:59:59+05:30'),
+  closingDate: new Date('2026-08-15T23:59:00+05:30'),
   sizes: ['S', 'M', 'L', 'XL', 'XXL'],
   price: 420,
   priceWords: 'Four hundred and twenty only',
@@ -337,7 +337,7 @@ export const Merchandise = {
   sizeChartImage : '/assets/merchandise/size-chart.webp',
   qrImage: '/assets/merchandise/payment-qr.webp',
   instructions: [
-    'Last Date to fill the form is 10 August 2026 [11:59 PM]',
+    'Last Date to fill the form is 15 August 2026 [11:59 PM]',
     'Fill in every field exactly as it should appear on record — double check the details you entered before submitting.',
     'Please ensure the name you enter in \u201CName to be printed on Merch\u201D is appropriate. We reserve the right to change it if necessary.',
     'Complete the payment using the QR code or UPI ID shown alongside this form and upload the screenshot in \u201CUpload Payment Screenshot\u201D.',
@@ -366,12 +366,12 @@ export const Fest = {
     {
       eventTitle: "Rovaris",
       org: "VIT Stellar X Vaayusastra",
-      eventDesc: "Rovaris is a two-day rover engineering challenge that combines hands-on learning, design, and competition. Participants will learn the fundamentals of rover systems, mobility mechanisms, and control systems before designing and building their own rover. The event culminates in a series of challenges that test the performance, maneuverability, and reliability of each team’s creation.",
+      eventDesc: "Ever wondered what it feels like to be part of a Mars mission? ROVARIS combines space technology, strategy, and hands-on rover building. Day 1 features an expert-led workshop and software challenges. Day 2 brings rover building, a thrilling race, and terrain competition. Teams take home their assembled rover!",
       eventImage: "/assets/gravitas2026/Rovaris.webp",
       date: "05 SEPT - 06 SEPT",
       time: "09:00 AM - 05:00 PM",
-      teamSize: "5",
-      registerUrl: "https://gravitas.vit.ac.in/",
+      teamSize: "4-5",
+      registerUrl: "https://gravitas.vit.ac.in/events/3cd06454-d26e-4770-83ec-1f222f9d19ab",
       pocs: [
         { name: 'Haneesh Yadav', image: '/assets/team/2026/Haneesh Yadav.webp', phone: '+91 91033 55700' },
       ],
@@ -379,12 +379,12 @@ export const Fest = {
     {
       eventTitle: "Aerovate 3.0",
       org: "VIT Stellar X Thrust Tech India",
-      eventDesc: "Design, build, and launch your own rocket",
+      eventDesc: "Aerovate 3.0 is a two-day hands-on rocketry workshop introducing participants to aerospace engineering. Through interactive sessions, participants explore aerodynamics, rocket stability, and propulsion. They then design, build, and launch model rockets, gaining practical experience and understanding the complete engineering journey from concept and design to a successful launch.",
       eventImage: "/assets/gravitas2026/Aerovate 3.0.webp",
-      date: "12 SEPT - 13 SEPT",
+      date: "11 SEPT - 12 SEPT",
       time: "09:00 AM - 05:00 PM",
-      teamSize: "4",
-      registerUrl: "https://gravitas.vit.ac.in/",
+      teamSize: "4-5",
+      registerUrl: "https://gravitas.vit.ac.in/events/b706e255-5801-4091-a6c2-1a4b6f3f0098",
       pocs: [
         { name: 'Khushii Anand', image: '/assets/team/2026/Khushii Anand.webp', phone: '+91 83080 36411' },
       ],
@@ -392,13 +392,13 @@ export const Fest = {
     {
       eventTitle: "Celestial Dive 5.0",
       org: "VIT Stellar X Space Tek Planetariums",
-      eventDesc: "Overnight stargazing through advanced telescopes",
+      eventDesc: "Celestial Dive 5.0 is an immersive journey beyond Earth, offering a night of cosmic exploration. Participants observe celestial wonders through powerful telescopes, explore astronomy through engaging sessions, and experience immersive planetariums. A moonlit ambiance enhances the experience, inspiring wonder, curiosity, and a deeper connection with the universe.",
       eventImage: "/assets/gravitas2026/Celestial Dive 5.0.webp",
       date: "18 SEPT - 19 SEPT",
       time: "09:00 PM - 05:00 AM",
       teamSize: "SOLO",
       tag: "OVERNIGHT",
-      registerUrl: "https://gravitas.vit.ac.in/",
+      registerUrl: "https://gravitas.vit.ac.in/events/0629102b-cc5f-4992-8921-2e55df1cb2f9",
       pocs: [
         { name: 'Ekansh Garg', image: '/assets/team/2026/Ekansh Garg.webp', phone: '+91 97613 34159' },
       ],

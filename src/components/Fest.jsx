@@ -9,6 +9,13 @@ function shouldShowSponsor() {
   return false;
 }
 
+// Toggle to control whether the POC (Point of Contact) section is displayed.
+// Set to false to hide the POC cards — the event container above it (the
+// premier card + timeline) will still be shown either way.
+function shouldShowPoc() {
+  return false;
+}
+
 function festGetTimeLeft(target) {
   const diff = Math.max(0, target.getTime() - Date.now());
   return {
@@ -293,7 +300,7 @@ function FestSection() {
         </div>
 
       </section>
-      <section className="fest-section" id="fest-premier" style={{ paddingTop: 0, paddingBottom: 0 }}>
+      <section className="fest-section" id="fest-premier" style={{ paddingTop: 0, paddingBottom: shouldShowPoc() ? 0 : 48 }}>
         <div className="fest-shell">
           <div
             className="fest-premier-card"
@@ -372,7 +379,7 @@ function FestSection() {
                     <span>{ev.eventTitle}</span>
                   </div>
                   <div className={`events-timeline-marker${activeEvent === i ? ' active' : ''}`} />
-                  <div className="events-timeline-connector" />
+                  {shouldShowPoc() && <div className="events-timeline-connector" />}
                 </button>
               ))}
             </div>
@@ -384,7 +391,7 @@ function FestSection() {
             >
               <div className="events-timeline-fork-trunk" />
               <div className="events-timeline-fork-bar" />
-              {festPocs.map((_, i) => (
+              {shouldShowPoc() && festPocs.map((_, i) => (
                 <div
                   key={i}
                   className="events-timeline-fork-branch"
@@ -396,33 +403,37 @@ function FestSection() {
             <div className="events-timeline-single" aria-hidden="true" />
           )}
 
-          <div className="fest-mobile-connector">
-            <div className="fest-mobile-line" aria-hidden="true" />
-          </div>
+          {shouldShowPoc() && (
+            <div className="fest-mobile-connector">
+              <div className="fest-mobile-line" aria-hidden="true" />
+            </div>
+          )}
         </div>
       </section>
-      <section className="fest-section" id="fest-featured" style={{ paddingTop: 44, paddingBottom: 32 }}>
-        <FestPocCarousel
-          pocs={festPocs}
-          activeEventIndex={activeEvent}
-          eventsCount={Fest.events.length}
-          onSelect={setActiveEvent}
-        />
-        {Fest.events.length > 1 && (
-          <div className="fest-mobile-dots">
-            {Fest.events.map((ev, i) => (
-              <button
-                type="button"
-                key={i}
-                className={`fest-mobile-dot${activeEvent === i ? ' active' : ''}`}
-                onClick={() => setActiveEvent(i)}
-                aria-pressed={activeEvent === i}
-                aria-label={`Show ${ev.eventTitle} event`}
-              />
-            ))}
-          </div>
-        )}
-      </section>
+      {shouldShowPoc() && (
+        <section className="fest-section" id="fest-featured" style={{ paddingTop: 44, paddingBottom: 32 }}>
+          <FestPocCarousel
+            pocs={festPocs}
+            activeEventIndex={activeEvent}
+            eventsCount={Fest.events.length}
+            onSelect={setActiveEvent}
+          />
+          {Fest.events.length > 1 && (
+            <div className="fest-mobile-dots">
+              {Fest.events.map((ev, i) => (
+                <button
+                  type="button"
+                  key={i}
+                  className={`fest-mobile-dot${activeEvent === i ? ' active' : ''}`}
+                  onClick={() => setActiveEvent(i)}
+                  aria-pressed={activeEvent === i}
+                  aria-label={`Show ${ev.eventTitle} event`}
+                />
+              ))}
+            </div>
+          )}
+        </section>
+      )}
       {shouldShowSponsor() && (
         <section className="fest-section" id="fest-partners" style={{ paddingTop: 32 }}>
           <div className="fest-shell">
