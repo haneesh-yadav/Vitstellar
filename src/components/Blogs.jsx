@@ -1,45 +1,6 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Icon from '../shared/Icon';
 import { Blogs } from '../database/Data';
-
-// Below this many cards, the section falls back to a static wrapped layout.
-// At or above it, the section pins in place and scrubs the card tray
-// horizontally as the user scrolls (on any screen size), releasing once
-// the last card has fully entered the viewport.
-const SCROLL_JACK_THRESHOLD = 5;
-
-function BlogCard({ post, onOpen }) {
-  const thumb = (
-    <div
-      className="bp-card-thumb"
-      style={!post.image ? { background: `radial-gradient(120% 120% at 20% 15%, ${post.accent}33, #14141a 70%)` } : undefined}
-    >
-      {post.image ? (
-        <img src={post.image} alt={post.title} className="bp-card-thumb-img" />
-      ) : (
-        <Icon name={post.icon} className="bp-card-thumb-icon" />
-      )}
-    </div>
-  );
-
-  return (
-    <div className="bp-card">
-      <h3 className="bp-card-title">{post.title}</h3>
-      {post.author && <p className="bp-card-author">By {post.author}</p>}
-      <div className="bp-card-links">
-        <button
-          type="button"
-          className="bp-card-open-btn"
-          aria-label={`Read ${post.title}`}
-          onClick={() => onOpen && onOpen(post)}
-        >
-          <Icon name="north_east" />
-        </button>
-      </div>
-      {thumb}
-    </div>
-  );
-}
 
 function BlogModal({ post, onClose }) {
   const [cachedPost, setCachedPost] = useState(post);
@@ -114,160 +75,133 @@ function BlogModal({ post, onClose }) {
   );
 }
 
-// Walks up the DOM to find the nearest ancestor that is actually scrollable
-// (overflow-y auto/scroll and has overflow content). Falls back to window.
-// This app scrolls inside `.tg-landing`, not `window`/`body`, so scroll
-// listeners must be attached to that real scroll container.
-function getScrollParent(el) {
-  let node = el ? el.parentElement : null;
-  while (node && node !== document.body) {
-    const style = window.getComputedStyle(node);
-    const overflowY = style.overflowY;
-    if ((overflowY === 'auto' || overflowY === 'scroll') && node.scrollHeight > node.clientHeight) {
-      return node;
-    }
-    node = node.parentElement;
-  }
-  return window;
-}
-
-// Finds a fixed/sticky navbar pinned near the top of the viewport (if any)
-// and returns how far down its bottom edge sits. The scroll-jacked section
-// should pin itself just below that point, not at the very top (0), or the
-// navbar will overlap the cards while they're pinned.
-function getNavOffset() {
-  const candidates = document.querySelectorAll('nav, header, [class*="nav" i], [class*="header" i]');
-  let offset = 0;
-  candidates.forEach((el) => {
-    const style = window.getComputedStyle(el);
-    if (style.position === 'fixed' || style.position === 'sticky') {
-      const rect = el.getBoundingClientRect();
-      if (rect.top <= 40 && rect.height > 0 && rect.bottom > offset) {
-        offset = Math.ceil(rect.bottom);
-      }
-    }
-  });
-  return offset;
-}
-
-// Drives the pinned horizontal scroll: measures how far the track overflows
-// its viewport, then converts vertical scroll progress through a tall
-// "runway" wrapper into a horizontal translateX on the track.
-function useScrollJack(enabled) {
-  const outerRef = useRef(null);
-  const stickyRef = useRef(null);
-  const viewportRef = useRef(null);
-  const trackRef = useRef(null);
-  const [maxTranslate, setMaxTranslate] = useState(0);
-  const [stickyHeight, setStickyHeight] = useState(0);
-  const [translate, setTranslate] = useState(0);
-  const [navOffset, setNavOffset] = useState(0);
-
-  const measure = useCallback(() => {
-    if (!enabled) return;
-    const track = trackRef.current;
-    const viewport = viewportRef.current;
-    const sticky = stickyRef.current;
-    if (!track || !viewport || !sticky) return;
-    setMaxTranslate(Math.max(0, track.scrollWidth - viewport.clientWidth));
-    setStickyHeight(sticky.offsetHeight);
-    setNavOffset(getNavOffset());
-  }, [enabled]);
-
-  useEffect(() => {
-    if (!enabled) return;
-    measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, [enabled, measure]);
-
-  useEffect(() => {
-    if (!enabled) return;
-    // Bind to the real scrolling ancestor (e.g. `.tg-landing`), not window,
-    // since window/body scrolling is disabled in this app.
-    const scrollTarget = getScrollParent(outerRef.current);
-
-    let rafId = null;
-    const onScroll = () => {
-      if (rafId) return;
-      rafId = requestAnimationFrame(() => {
-        rafId = null;
-        const outer = outerRef.current;
-        if (!outer) return;
-        if (maxTranslate <= 0) {
-          setTranslate(0);
-          return;
-        }
-        const rect = outer.getBoundingClientRect();
-        const scrollableHeight = rect.height - stickyHeight;
-        if (scrollableHeight <= 0) {
-          setTranslate(0);
-          return;
-        }
-        // rect.top reaches `navOffset` (not 0) once the section is pinned,
-        // since the sticky child sits `navOffset`px from the top to clear
-        // the navbar. Progress should start counting from that point.
-        const progress = Math.min(1, Math.max(0, (navOffset - rect.top) / scrollableHeight));
-        setTranslate(progress * maxTranslate);
-      });
-    };
-    onScroll();
-    scrollTarget.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      scrollTarget.removeEventListener('scroll', onScroll);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, [enabled, maxTranslate, stickyHeight, navOffset]);
-
-  const outerHeight = enabled && maxTranslate > 0 ? `${stickyHeight + maxTranslate}px` : undefined;
-
-  return { outerRef, stickyRef, viewportRef, trackRef, translate, outerHeight, navOffset };
-}
-
 function BlogsSection() {
   const items = Blogs.items;
   const total = items.length;
-  const scrollJackEnabled = total >= SCROLL_JACK_THRESHOLD;
-  const { outerRef, stickyRef, viewportRef, trackRef, translate, outerHeight, navOffset } = useScrollJack(scrollJackEnabled);
 
+  const [active, setActive] = useState(0);
   const [modalPost, setModalPost] = useState(null);
 
+  const touchStartX = useRef(null);
+  const touchDeltaX = useRef(0);
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const step = (dir) => setActive((prev) => (prev + dir + total) % total);
+
+  // Only autoplay while the section is actually on screen — same reasoning
+  // as the gallery carousel: otherwise `active` keeps advancing while the
+  // user is reading something further down the page.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setIsVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible || total <= 1) return;
+    const id = setInterval(() => setActive((prev) => (prev + 1 + total) % total), 10000);
+    return () => clearInterval(id);
+  }, [total, isVisible]);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchDeltaX.current = 0;
+  };
+  const handleTouchMove = (e) => {
+    if (touchStartX.current === null) return;
+    touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
+  };
+  const handleTouchEnd = () => {
+    const SWIPE_THRESHOLD = 40;
+    if (touchDeltaX.current <= -SWIPE_THRESHOLD) step(1);
+    else if (touchDeltaX.current >= SWIPE_THRESHOLD) step(-1);
+    touchStartX.current = null;
+    touchDeltaX.current = 0;
+  };
+
   return (
-    <div className={"bp-wrapper" + (scrollJackEnabled ? "" : " bp-wrapper-static")} id="blogs">
-      {!scrollJackEnabled && (
+    <div className="bp-wrapper" id="blogs" ref={sectionRef}>
+      <div className="bp-shell">
         <div className="bp-heading-row">
           <h2 className="bp-heading">BLOGS</h2>
         </div>
-      )}
 
-      {scrollJackEnabled ? (
-        <div ref={outerRef} className="bp-scroll-outer" style={{ height: outerHeight }}>
-          <div ref={stickyRef} className="bp-sticky" style={{ top: navOffset }}>
-            <div className="bp-heading-row">
-              <h2 className="bp-heading">BLOGS</h2>
-            </div>
-            <div ref={viewportRef} className="bp-viewport">
+        <div
+          className="bp-stage"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {items.map((post, i) => {
+            let offset = i - active;
+            if (offset > total / 2) offset -= total;
+            if (offset < -total / 2) offset += total;
+            const dist = Math.abs(offset);
+            const hidden = dist > 2;
+            const visualDist = Math.min(dist, 2);
+
+            return (
               <div
-                ref={trackRef}
-                className="bp-track"
-                style={{ transform: `translateX(-${translate}px)` }}
+                className={`bp-card${offset === 0 ? ' is-active' : ''}`}
+                key={post.title}
+                style={{
+                  transform: `translateX(calc(-50% + ${offset * 230}px)) translateY(${visualDist * 26}px) scale(${1 - visualDist * 0.14})`,
+                  zIndex: 10 - visualDist,
+                  opacity: hidden ? 0 : (dist === 0 ? 1 : Math.max(1 - dist * 0.32, 0.28)),
+                  visibility: hidden ? 'hidden' : 'visible',
+                  pointerEvents: hidden ? 'none' : 'auto',
+                }}
+                onClick={() => offset !== 0 && !hidden && setActive(i)}
+                aria-hidden={hidden}
               >
-                {items.map((post) => (
-                  <BlogCard post={post} key={post.title} onOpen={setModalPost} />
-                ))}
+                <h3 className="bp-card-title">{post.title}</h3>
+                {post.author && <p className="bp-card-author">By {post.author}</p>}
+                <div className="bp-card-links">
+                  <button
+                    type="button"
+                    className="bp-card-open-btn"
+                    aria-label={`Read ${post.title}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setModalPost(post);
+                    }}
+                  >
+                    <Icon name="north_east" />
+                  </button>
+                </div>
+                <div
+                  className="bp-card-thumb"
+                  style={!post.image ? { background: `radial-gradient(120% 120% at 20% 15%, ${post.accent}33, #14141a 70%)` } : undefined}
+                >
+                  {post.image ? (
+                    <img src={post.image} alt={post.title} className="bp-card-thumb-img" />
+                  ) : (
+                    <Icon name={post.icon} className="bp-card-thumb-icon" />
+                  )}
+                </div>
               </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
-      ) : (
-        <div className="bp-viewport bp-viewport-static">
-          <div className="bp-track bp-track-centered">
-            {items.map((post) => (
-              <BlogCard post={post} key={post.title} onOpen={setModalPost} />
-            ))}
-          </div>
+
+        <div className="bp-nav">
+          <button type="button" className="bp-nav-btn" onClick={() => step(-1)} aria-label="Previous post">
+            <Icon name="arrow_back" />
+          </button>
+          <button type="button" className="bp-nav-btn" onClick={() => step(1)} aria-label="Next post">
+            <Icon name="arrow_forward" />
+          </button>
         </div>
-      )}
+      </div>
 
       <BlogModal post={modalPost} onClose={() => setModalPost(null)} />
     </div>

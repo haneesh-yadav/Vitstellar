@@ -68,7 +68,7 @@ function LandingPage() {
 
           <MerchandiseSection />
 
-          {/* <FestSection /> */}
+          <FestSection />
 
           {/* <BoardApplicationSection /> */}
 

@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-/* ══════════════════════════════════════════════════════
-   NAV ITEMS — shown inside the dropdown panel below
-   ══════════════════════════════════════════════════════ */
 const NAV_LINKS = [
   { label: "Home",                   href: "#top"          },
   { label: "About Us",               href: "#aboutus"      },
   { label: "Team",                   href: "#team"   },
-  { label: "Merchandise 2026",       href: "#merchandise"  },
-  // { label: "Gravitas 2026",          href: "#fest"       },
+  // { label: "Merchandise 2026",       href: "#merchandise"  },
+  { label: "Gravitas 2026",          href: "#fest"       },
   // { label: "Board Application 2027", href: "#board-application" },
   { label: "Events",                 href: "#events"       },
   { label: "Publications / Blogs",   href: "#publications" },
@@ -18,28 +15,22 @@ const NAV_LINKS = [
   { label: "Contact Us",             href: "#contactus"    },
 ];
 
-/* ══════════════════════════════════════════════════════
-   ANNOUNCEMENT — small capsule docked under the nav pill.
-   Swap `text`/`href` here whenever there's something new to
-   push (merch drop, ticket sale, deadline, etc). Set to null
-   to hide it entirely without touching the markup below.
-   ══════════════════════════════════════════════════════ */
+// const ANNOUNCEMENT = {
+//   show: true,   // ← set to false to hide the bar, true to show it
+//   icon: "shopping_bag",
+//   text: "MERCHANDISE 2026 IS LIVE",
+//   href: "#merchandise",
+// };
+
 const ANNOUNCEMENT = {
   show: true,   // ← set to false to hide the bar, true to show it
-  icon: "shopping_bag",
-  text: "MERCHANDISE 2026 IS LIVE",
-  href: "#merchandise",
+  icon: "festival",
+  text: "GRAVITAS 2026",
+  href: "#fest",
 };
 
 // const ANNOUNCEMENT = {
-//   show: false,   // ← set to false to hide the bar, true to show it
-//   icon: "festival",
-//   text: "GRAVITAS 2026",
-//   href: "#fest",
-// };
-
-// const ANNOUNCEMENT = {
-//   show: false,   // ← set to false to hide the bar, true to show it
+//   show: true,   // ← set to false to hide the bar, true to show it
 //   icon: "how_to_reg",
 //   text: "BOARD APPLICATION 2027",
 //   href: "#fest",
@@ -56,21 +47,16 @@ const img = {
   artemis: "/assets/hero/Artemis II.webp",
 };
 
-/* ══════════════════════════════════════════════════════
-   ROW SLOTS — raw Figma px (frame 2000x954, node 42:4) for each nav-row's
-   divider/link position. Position-only, independent of label text, so
-   whatever NAV_LINKS claims slots in order.
-   ══════════════════════════════════════════════════════ */
 const ROW_SLOTS = [
-  { dividerTop: 120, linkTop: 139, linkLeft: 145 },
-  { dividerTop: 203, linkTop: 222, linkLeft: 145 },
+  { dividerTop: 120, linkTop: 140, linkLeft: 145 },
+  { dividerTop: 203, linkTop: 223, linkLeft: 145 },
   { dividerTop: 286, linkTop: 306, linkLeft: 145 },
   { dividerTop: 370, linkTop: 390, linkLeft: 145 },
-  { dividerTop: 452, linkTop: 480, linkLeft: 147 },
+  { dividerTop: 452, linkTop: 472, linkLeft: 147 },
   { dividerTop: 540, linkTop: 560, linkLeft: 146 },
-  { dividerTop: 621, linkTop: 644, linkLeft: 146 },
-  { dividerTop: 701, linkTop: 723, linkLeft: 145 },
-  { dividerTop: 784, linkTop: 798, linkLeft: 146 },
+  { dividerTop: 621, linkTop: 641, linkLeft: 146 },
+  { dividerTop: 701, linkTop: 721, linkLeft: 145 },
+  { dividerTop: 784, linkTop: 804, linkLeft: 146 },
 ];
 const CLOSING_DIVIDER_TOP = 861;
 const DIVIDER_LEFT = 146;
@@ -563,10 +549,7 @@ const HEADER_CSS = `
   /* gradient + inner shadow overlay */
   .tgm-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100cqw;
-    height: 47.2cqw;
+    inset: 0;
     pointer-events: none;
     background-image: linear-gradient(
       115.1059889185485deg,
