@@ -24,9 +24,9 @@ const NAV_LINKS = [
 
 const ANNOUNCEMENT = {
   show: true,   // ← set to false to hide the bar, true to show it
-  icon: "festival",
-  text: "GRAVITAS 2026",
-  href: "#fest",
+  icon: "newspaper",
+  text: "Antarikshvani 2026",
+  href: "#publications",
 };
 
 // const ANNOUNCEMENT = {
