@@ -1,5 +1,5 @@
 import { merchandiseDeadlines, festDeadlines, boardApplicationDeadlines } from './Deadlines';
-import { formatDeadlineNotice } from '../shared/dateUtils';
+import { formatDeadlineNotice } from '../shared/dateutils';
 
 export const Hero = {
   titleImage: { src: '/assets/hero/stellar.webp', alt: 'STELLAR' },
