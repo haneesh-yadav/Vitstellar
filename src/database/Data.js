@@ -1,3 +1,6 @@
+import { merchandiseDeadlines, festDeadlines, boardApplicationDeadlines } from './Deadlines';
+import { formatDeadlineNotice } from '../shared/dateUtils';
+
 export const Hero = {
   titleImage: { src: '/assets/hero/stellar.webp', alt: 'STELLAR' },
   centerpieceImage: { src: '/assets/hero/Center.webp', alt: 'Astronaut floating in space' },
@@ -326,8 +329,7 @@ export const Team = {
 };
 
 export const Merchandise = {
-  releaseDate: new Date('2026-08-01T00:00:00+05:30'),
-  closingDate: new Date('2026-08-15T23:59:00+05:30'),
+  ...merchandiseDeadlines,
   sizes: ['S', 'M', 'L', 'XL', 'XXL'],
   price: 420,
   priceWords: 'Four hundred and twenty only',
@@ -337,7 +339,7 @@ export const Merchandise = {
   sizeChartImage : '/assets/merchandise/size-chart.webp',
   qrImage: '/assets/merchandise/payment-qr.webp',
   instructions: [
-    'Last Date to fill the form is 15 August 2026 [11:59 PM]',
+    `Last Date to fill the form is ${formatDeadlineNotice(merchandiseDeadlines.closingDate)}`,
     'Fill in every field exactly as it should appear on record — double check the details you entered before submitting.',
     'Please ensure the name you enter in \u201CName to be printed on Merch\u201D is appropriate. We reserve the right to change it if necessary.',
     'Complete the payment using the QR code or UPI ID shown alongside this form and upload the screenshot in \u201CUpload Payment Screenshot\u201D.',
@@ -349,20 +351,6 @@ export const Merchandise = {
 export const Fest = {
   logo: '/assets/gravitas2026/gravitas26.svg',
   events: [
-    // {
-    //   eventTitle: "Space Day",
-    //   org: "VIT Stellar",
-    //   eventDesc: "",
-    //   eventImage: "/assets/gravitas2026/Space Day.webp",
-    //   date: "22 SEPT 2026",
-    //   time: "09:00 AM - 05:00 PM",
-    //   teamSize: "SOLO",
-    //   registerUrl: "https://gravitas.vit.ac.in/",
-    //   pocs: [
-    //     { name: 'Zayn Khan', image: '/assets/team/2026/Zayn Khan.webp', phone: '+91 91486 36963' },
-    //     { name: 'Nakshatra Gundeli', image: '/assets/team/2026/Nakshatra Gundeli.webp', phone: '+91 93714 22293' },
-    //   ],
-    // },
     {
       eventTitle: "Rovaris",
       org: "VIT Stellar X Vaayusastra",
@@ -404,29 +392,30 @@ export const Fest = {
       ],
     },
   ],
-  sponsor: { name: '', logo: '/assets/sponsors/.webp', url: 'https://example.com' },
+  sponsor: { name: '', logo: '/assets/gravitas2026/SBI.webp', url: 'https://sbi.bank.in/' },
   sponsorsSubtext: 'Thank you to our Gravitas 2026 sponsor!',
-  galleryDriveLink: 'https://drive.google.com/drive/folders/PLACEHOLDER_FOLDER_ID',
   galleryUploadDesc: 'Were you at our Fest event? Share your shots with us by uploading them on below link.',
-  shotsUploadDate: new Date('2026-09-05T00:00:00+05:30'),
+  galleryDriveLink: 'https://drive.google.com/drive/folders/PLACEHOLDER_FOLDER_ID',
+  teamFormEventName: 'Rovaris',
+  teamFormInstructions: [
+    `Last Date to fill the form is ${formatDeadlineNotice(festDeadlines.teamRegClosingDate)}`,
+    'This form is to be filled by the Team Leader only, on behalf of the whole team.',
+    'Fill in every field exactly as it should appear on record — double check the details you entered before submitting.',
+    'In case of any queries, please feel free to contact Event POC : Haneesh Yadav - 9103355700.',
+  ],
+  ...festDeadlines,
 };
 
 export const BoardApplication = {
   phaseOverride: null,
-  openDate: new Date('2027-01-01T00:00:00+05:30'),
-  deadline: new Date('2027-01-30T23:59:59+05:30'),
-  slotsStart: new Date('2027-01-01T00:00:00+05:30'),
-  slotsEnd: new Date('2027-01-30T23:59:59+05:30'),
-  resultsDate: new Date('2027-01-01T00:00:00+05:30'),
+  ...boardApplicationDeadlines,
   formInstructions: [
-    'Last Date to fill the form is 01 Feb 2027 [11:59 PM]',
+    `Last Date to fill the form is ${formatDeadlineNotice(boardApplicationDeadlines.deadline)}`,
     'Please read the Roles and Responsibilities carefully before applying for any Board Position. ',
     'Apply only for roles you are  genuinely interested in and ready to contribute to.',
     'In case of any query, please feel free to ask any of the Board Members.',
   ],
   positions: [
-    "Chairperson",
-    "Secretary",
     "Vice Chairperson",
     "Co Secretary",
     "Events & Management Head",

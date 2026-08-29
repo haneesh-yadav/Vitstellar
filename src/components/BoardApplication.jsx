@@ -30,6 +30,68 @@ function computeBoardAppPhase() {
   return now < BoardApplication.resultsDate ? 'results_pending' : 'results';
 }
 
+function RolesResponsibilitiesModal({ open, onClose }) {
+  const [shouldRender, setShouldRender] = useState(open);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    let raf1;
+    let raf2;
+    let timeout;
+    if (open) {
+      setShouldRender(true);
+      // Double rAF: guarantees the browser paints the initial
+      // (invisible) state before we flip to visible, so the
+      // transition has something to animate from. A single rAF
+      // can get batched with the state update above and skip
+      // straight to the end state on fast/desktop displays.
+      raf1 = requestAnimationFrame(() => {
+        raf2 = requestAnimationFrame(() => setVisible(true));
+      });
+    } else {
+      setVisible(false);
+      timeout = setTimeout(() => setShouldRender(false), 260);
+    }
+    return () => {
+      if (raf1) cancelAnimationFrame(raf1);
+      if (raf2) cancelAnimationFrame(raf2);
+      if (timeout) clearTimeout(timeout);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!shouldRender) return;
+    const onKeyDown = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [shouldRender, onClose]);
+
+  if (!shouldRender) return null;
+
+  return (
+    <div
+      className={`size-chart-overlay${visible ? ' is-visible' : ''}`}
+      onClick={onClose}
+    >
+      <div className="size-chart-modal roles-responsibilities-modal" onClick={(e) => e.stopPropagation()}>
+        <button
+          type="button"
+          className="size-chart-close"
+          onClick={onClose}
+          aria-label="Close Roles and Responsibilities"
+        >
+          <Icon name="close" />
+        </button>
+        <iframe
+          className="roles-responsibilities-pdf"
+          src={BoardApplication.rolesResponsibilitiesPdf}
+          title="Roles and Responsibilities"
+        />
+      </div>
+    </div>
+  );
+}
+
 export function BoardPositionDropdown({ id, value, onChange, options, placeholder = "Select a position" }) {
   const [open, setOpen] = useState(false);
   const [dropUp, setDropUp] = useState(false);
@@ -118,6 +180,7 @@ function BoardApplicationSection() {
   const [slotsDateIndex, setSlotsDateIndex] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+  const [showRolesModal, setShowRolesModal] = useState(false);
 
   const handleExperienceChange = (id, value) => {
     setExperienceAnswers((prev) => ({ ...prev, [id]: value }));
@@ -300,9 +363,19 @@ function BoardApplicationSection() {
         <>
         <div className="board-app-outer-card">
           <div className="merch-instructions-box">
-            <div className="merch-instructions-title">
-              <Icon name="info" />
-              <span>Important Instructions</span>
+            <div className="board-app-label-row">
+              <div className="merch-instructions-title">
+                <Icon name="info" />
+                <span>Important Instructions</span>
+              </div>
+              <button
+                type="button"
+                className="size-chart-trigger"
+                onClick={() => setShowRolesModal(true)}
+              >
+                <Icon name="picture_as_pdf" />
+                <span>Roles & Responsibilities</span>
+              </button>
             </div>
             <ul className="merch-instructions-list">
               {BoardApplication.formInstructions.map((line, i) => (
@@ -360,7 +433,7 @@ function BoardApplicationSection() {
                       className="board-app-detail-input"
                       placeholder="Enter your Registration Number"
                       value={regNumber}
-                      onChange={(e) => setRegNumber(e.target.value)}
+                      onChange={(e) => setRegNumber(e.target.value.toUpperCase())}
                       required
                     />
                     {getFieldError('regNumber') && (
@@ -396,8 +469,9 @@ function BoardApplicationSection() {
                       className="board-app-detail-input"
                       placeholder="Enter your Contact Number"
                       value={contactNumber}
-                      onChange={(e) => setContactNumber(e.target.value)}
+                      onChange={(e) => setContactNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
                       maxLength={10}
+                      inputMode="numeric"
                       required
                     />
                     {getFieldError('contactNumber') && (
@@ -721,6 +795,7 @@ function BoardApplicationSection() {
           </>
         )}
       </div>
+      <RolesResponsibilitiesModal open={showRolesModal} onClose={() => setShowRolesModal(false)} />
     </section>
   );
 }
