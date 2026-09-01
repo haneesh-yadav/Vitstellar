@@ -1,4 +1,4 @@
-import { merchandiseDeadlines, festDeadlines, boardApplicationDeadlines } from './Deadlines';
+import { merchandiseDeadlines, festDeadlines, boardApplicationDeadlines, domainSelectionDeadlines } from './Deadlines';
 import { formatDeadlineNotice } from '../shared/dateutils';
 
 export const Hero = {
@@ -413,7 +413,7 @@ export const BoardApplication = {
     `Last Date to fill the form is ${formatDeadlineNotice(boardApplicationDeadlines.deadline)}`,
     'Please read the Roles and Responsibilities carefully before applying for any Board Position. ',
     'Apply only for roles you are  genuinely interested in and ready to contribute to.',
-    'In case of any query, please feel free to ask any of the Board Members.',
+    'In case of any queries, please feel free to contact any of the Board Members or reach us through the Contact Us section below.',
   ],
   positions: [
     "Vice Chairperson",
@@ -447,7 +447,7 @@ export const BoardApplication = {
   slotInstructions: [
     'There will be no changes in the schedule, so make sure to arrive on time for your slot.',
     'The Link for Interview will be shared with you personally by the Board Member.',
-    'In case of any query, please feel free to ask any of the Board Members.',
+    'In case of any queries, please feel free to contact any of the Board Members or reach us through the Contact Us section below.',
   ],
   interviewSlots: [
     {
@@ -468,6 +468,24 @@ export const BoardApplication = {
     { position: "Design Head",              year: "2027", regNumber: "NA-", name: "NA-" },
     { position: "Publicity Head",           year: "2027", regNumber: "NA-", name: "NA-" },
     { position: "Editorial Head",           year: "2027", regNumber: "NA-", name: "NA-" },
+  ],
+};
+
+export const DomainSelection = {
+  ...domainSelectionDeadlines,
+  formInstructions: [
+    `Last Date to fill the form is ${formatDeadlineNotice(domainSelectionDeadlines.deadline)}`,
+    'Fill in every field exactly as it should appear on record — double check the details you entered before submitting.',
+    'You may list a first and second domain preference, in order of priority.',
+    'In case of any queries, please feel free to contact any of the Board Members or reach us through the Contact Us section below.',
+  ],
+  domains: [
+    "Events & Management",
+    "Finance",
+    "Technical",
+    "Design",
+    "Publicity",
+    "Editorial",
   ],
 };
 
