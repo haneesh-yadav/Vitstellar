@@ -24,9 +24,9 @@ const NAV_LINKS = [
 
 const ANNOUNCEMENT = {
   show: true,   // ← set to false to hide the bar, true to show it
-  icon: "newspaper",
-  text: "Antarikshvani 2026",
-  href: "#publications",
+  icon: "groups",
+  text: "Rovaris Team Formation",
+  href: "#fest",
 };
 
 // const ANNOUNCEMENT = {

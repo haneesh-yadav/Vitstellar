@@ -15,7 +15,7 @@ function shouldShowSponsor() {
 // Set to false to hide the POC cards — the event container above it (the
 // premier card + timeline) will still be shown either way.
 function shouldShowPoc() {
-  return false;
+  return true;
 }
 
 function festGetTimeLeft(target) {
