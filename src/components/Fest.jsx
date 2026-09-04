@@ -8,7 +8,7 @@ import { supabase } from '../shared/supabaseClient';
 // Toggle to control whether the Sponsor section is displayed.
 // Set to false to hide the sponsor box entirely.
 function shouldShowSponsor() {
-  return false;
+  return true;
 }
 
 // Toggle to control whether the POC (Point of Contact) section is displayed.

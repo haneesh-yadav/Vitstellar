@@ -383,7 +383,7 @@ export const Fest = {
       eventDesc: "Celestial Dive 5.0 is an immersive journey beyond Earth, offering a night of cosmic exploration. Participants observe celestial wonders through powerful telescopes, explore astronomy through engaging sessions, and experience immersive planetariums. A moonlit ambiance enhances the experience, inspiring wonder, curiosity, and a deeper connection with the universe.",
       eventImage: "/assets/gravitas2026/Celestial Dive 5.0.webp",
       date: "18 SEPT - 19 SEPT",
-      time: "09:00 PM - 05:00 AM",
+      time: "09:00 PM - 06:00 AM",
       teamSize: "SOLO",
       tag: "OVERNIGHT",
       registerUrl: "https://gravitas.vit.ac.in/events/0629102b-cc5f-4992-8921-2e55df1cb2f9",
@@ -395,7 +395,7 @@ export const Fest = {
   sponsor: { name: '', logo: '/assets/gravitas2026/SBI.webp', url: 'https://sbi.bank.in/' },
   sponsorsSubtext: 'Thank you to our Gravitas 2026 sponsor!',
   galleryUploadDesc: 'Were you at our Fest event? Share your shots with us by uploading them on below link.',
-  galleryDriveLink: 'https://drive.google.com/drive/folders/PLACEHOLDER_FOLDER_ID',
+  galleryDriveLink: 'https://drive.google.com/drive/folders/1_4kXXu71Ig03Q1UTc5fBqhOqNCHQ226n?usp=sharing',
   teamFormEventName: 'Rovaris',
   teamFormInstructions: [
     `Last Date to fill the form is ${formatDeadlineNotice(festDeadlines.teamRegClosingDate)}`,
