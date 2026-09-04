@@ -24,8 +24,8 @@ const NAV_LINKS = [
 
 const ANNOUNCEMENT = {
   show: true,   // ← set to false to hide the bar, true to show it
-  icon: "groups",
-  text: "Rovaris Team Formation",
+  icon: "festival",
+  text: "GRAVITAS 2026",
   href: "#fest",
 };
 
